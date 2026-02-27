@@ -153,7 +153,7 @@ def main():
     df.drop(columns=['services'], inplace=True)
 
     # Save to CSV
-    df.to_csv('with_grade.csv', index=False)
+    df.to_csv('output.csv', index=False)
     
 
 
