@@ -1,7 +1,9 @@
 ## HOAS rent data scraping / analysis
 
-This repo includes a python file to scrape some information on all of the apartments HOAS provides.
-It also has a written report with my conclusions as well as a notebook that I used to generate the plots for the report.
+Hoas_data_yoinker builds a dataset of all current hoas apartments. 
+build.py compiles a nice visualization html
+/analysis contains some data analysis notebooks
 
 # Dataset
-The dataset is under with_grade.csv and running hoas_data_yoinker.py generates a new version of the dataset if new apts have been added
+The dataset is output.csv
+The geocodes are cached to geocode_cache.csv to prevent constantly hitting the service rate limits.
