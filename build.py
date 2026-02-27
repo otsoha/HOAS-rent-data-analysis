@@ -103,6 +103,7 @@ def build_html(ds, output_path=OUTPUT_HTML_PATH):
 <head>
     <meta charset=\"UTF-8\" />
     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />
+    <meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com; img-src 'self' data: https://tile.openstreetmap.org https://*.tile.openstreetmap.org; connect-src 'self'; font-src 'self' data: https://unpkg.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'\" />
     <title>HOAS Rent Map</title>
 
     <link href=\"https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator.min.css\" rel=\"stylesheet\" />
@@ -197,6 +198,15 @@ def build_html(ds, output_path=OUTPUT_HTML_PATH):
             return `€${{value.toFixed(2)}}`;
         }};
 
+        const escapeHtml = (value) => {{
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/\"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }};
+
         const formatNumber = (value) => Number.isFinite(value) ? value.toFixed(2) : "N/A";
 
         const buildingMap = new Map();
@@ -288,9 +298,11 @@ def build_html(ds, output_path=OUTPUT_HTML_PATH):
         }};
 
         const showBuildingStats = (building) => {{
+            const safeAddress = escapeHtml(building.address || "Unknown address");
+            const safeLocation = escapeHtml(building.location || "");
             statsEl.innerHTML = `
-                <strong>${{building.address || "Unknown address"}}</strong><br>
-                ${{building.location || ""}}<br>
+                <strong>${{safeAddress}}</strong><br>
+                ${{safeLocation}}<br>
                 Apartments: ${{Math.round(building.count)}}<br>
                 Average rent: ${{formatCurrency(building.avgRent)}}<br>
                 Average rent/m²: ${{formatCurrency(building.avgRentPerM2)}}
@@ -314,9 +326,12 @@ def build_html(ds, output_path=OUTPUT_HTML_PATH):
             buildingMarkers.push(marker);
             buildingMarkersByKey.set(building.key, marker);
 
+            const safeAddress = escapeHtml(building.address || "Unknown address");
+            const safeLocation = escapeHtml(building.location || "");
+
             marker.bindPopup(`
-                <strong>${{building.address || "Unknown address"}}</strong><br>
-                ${{building.location || ""}}<br>
+                <strong>${{safeAddress}}</strong><br>
+                ${{safeLocation}}<br>
                 Apartments: ${{Math.round(building.count)}}<br>
                 Avg rent: ${{formatCurrency(building.avgRent)}}<br>
                 Avg rent/m²: ${{formatCurrency(building.avgRentPerM2)}}
