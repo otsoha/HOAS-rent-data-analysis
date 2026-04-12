@@ -3,5 +3,3 @@
 /.venv
 .Rproj.user
 /build.py
-analysis\multivar_areas.ipynb
-analysis\multivar.ipynb
