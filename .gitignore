@@ -1,8 +1,7 @@
 /manual_prepro.csv
 /test_raw.csv
 /.venv
-/analysis/multivar.py
 .Rproj.user
 /build.py
-analysis\area_features.csv
-
+analysis\multivar_areas.ipynb
+analysis\multivar.ipynb
