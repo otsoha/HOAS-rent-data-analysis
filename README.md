@@ -1,10 +1,9 @@
 ## HOAS rent data scraping / analysis
 
-Hoas_data_yoinker builds a dataset of all current hoas apartments. 
-build.py compiles a nice visualization html and maps all addresses to coordinates for display.
-/analysis contains some data analysis notebooks
+Hoas_data_yoinker builds a dataset of all current hoas apartments, locations, rents, amenities. 
+area_features.csv contains historical data on average rent and size and distance to the main railway station.
+Geocode_cache is used to reduce the number of required calls to the mapping API during yoinking.
+/analysis contains some data analysis notebooks and scripts. 
+/analysis/data contains the historical datasets, only the latest one contains geocoding. 
 
-# Dataset
-The dataset is output.csv.
-The geocodes are cached to geocode_cache.csv to prevent constantly hitting the service rate limits.
 
